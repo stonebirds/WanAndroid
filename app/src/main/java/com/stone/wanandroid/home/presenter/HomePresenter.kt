@@ -7,6 +7,7 @@ import com.stone.net.manager.RetrofitHelper
 import com.stone.net.manager.RxHelper
 import com.stone.net.manager.RxSubscribe
 import com.stone.wanandroid.home.bean.HomeBannerBean
+import com.stone.wanandroid.home.bean.HomeBean
 import com.stone.wanandroid.home.contract.HomeContract
 import com.stone.wanandroid.net.ApiService
 
@@ -23,7 +24,6 @@ class HomePresenter : BasePresenter<HomeContract.View>(), HomeContract.Presenter
             .compose(RxHelper.handleScheduler())
             .subscribe(object : RxSubscribe<BaseResult<List<HomeBannerBean>>>() {
                 override fun onSuccess(data: BaseResult<List<HomeBannerBean>>) {
-                    LogUtils.e(data?.data.get(0).imagePath)
                     if (data.errorCode == 0){
                         val list = data.data
                         mView?.getHomeBannerSuccess(list)
@@ -38,7 +38,24 @@ class HomePresenter : BasePresenter<HomeContract.View>(), HomeContract.Presenter
             })
     }
 
-//    override fun getHomeArticle() {
-//    }
+    override fun getHomeArticle(isRefresh : Boolean, page: Int) {
+        RetrofitHelper.createService(ApiService::class.java)
+            .getArticleList(page)
+            .compose(RxHelper.handleScheduler())
+            .subscribe(object : RxSubscribe<BaseResult<HomeBean>>(){
+                override fun onSuccess(data: BaseResult<HomeBean>) {
+                    val errorCode = data.errorCode
+                    if (errorCode == 0) {
+                        mView?.getHomeArticleSuccess(data.data)
+                    }else{
+                        mView?.getHomeArticleFailed(data.errorCode, data.errorMsg)
+                    }
+                }
+
+                override fun onFailed(errorCode: Int, errorMsg: String) {
+                }
+
+            })
+    }
 
 }

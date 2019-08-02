@@ -2,7 +2,8 @@ package com.stone.wanandroid.home.adapter
 
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
-import com.stone.wanandroid.home.bean.HomeBean
+import com.stone.wanandroid.R
+import com.stone.wanandroid.home.bean.Data
 
 /**
  *
@@ -10,8 +11,8 @@ import com.stone.wanandroid.home.bean.HomeBean
  * 描述：please add a description here
  * 时间：2019-07-26
  */
-class HomeAdapter(layoutResId: Int) : BaseQuickAdapter<HomeBean, BaseViewHolder>(layoutResId) {
-    override fun convert(helper: BaseViewHolder?, item: HomeBean?) {
-
+class HomeAdapter(layoutResId: Int) : BaseQuickAdapter<Data, BaseViewHolder>(layoutResId) {
+    override fun convert(helper: BaseViewHolder?, item: Data?) {
+        helper?.setText(R.id.tv_title_home_article_item, item?.title)
     }
 }

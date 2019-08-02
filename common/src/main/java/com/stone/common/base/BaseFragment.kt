@@ -20,7 +20,7 @@ import pub.devrel.easypermissions.EasyPermissions
  * 描述：please add a description here
  * 时间：${DATE}
  */
- abstract class BaseFragment: Fragment(),EasyPermissions.PermissionCallbacks{
+abstract class BaseFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     /**
      * 视图是否加载完毕
      */
@@ -35,9 +35,8 @@ import pub.devrel.easypermissions.EasyPermissions
     protected var mLayoutStatusView: MultipleStatusView? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(getLayoutId(),null)
+        return inflater.inflate(getLayoutId(), null)
     }
-
 
 
     override fun setUserVisibleHint(isVisibleToUser: Boolean) {
@@ -72,7 +71,7 @@ import pub.devrel.easypermissions.EasyPermissions
      * 加载布局
      */
     @LayoutRes
-    abstract fun getLayoutId():Int
+    abstract fun getLayoutId(): Int
 
     /**
      * 初始化 ViewI
@@ -130,11 +129,11 @@ import pub.devrel.easypermissions.EasyPermissions
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
             Toast.makeText(activity, "已拒绝权限" + sb + "并不再询问", Toast.LENGTH_SHORT).show()
             AppSettingsDialog.Builder(this)
-                    .setRationale("此功能需要" + sb + "权限，否则无法正常使用，是否打开设置")
-                    .setPositiveButton("好")
-                    .setNegativeButton("不行")
-                    .build()
-                    .show()
+                .setRationale("此功能需要" + sb + "权限，否则无法正常使用，是否打开设置")
+                .setPositiveButton("好")
+                .setNegativeButton("不行")
+                .build()
+                .show()
         }
     }
 }

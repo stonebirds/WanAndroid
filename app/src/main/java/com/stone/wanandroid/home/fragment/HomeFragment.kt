@@ -5,9 +5,14 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
+import com.blankj.utilcode.util.ConvertUtils
 import com.blankj.utilcode.util.LogUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.scwang.smartrefresh.layout.api.RefreshLayout
+import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import com.stone.common.base.BaseFragment
+import com.stone.common.util.StatusBarUtil
 import com.stone.wanandroid.R
 import com.stone.wanandroid.home.adapter.HomeAdapter
 import com.stone.wanandroid.home.bean.Data
@@ -20,7 +25,7 @@ import com.stone.wanandroid.util.BannerImageLoader
 import com.youth.banner.Banner
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.item_home_banner.view.*
-import android.support.v7.widget.RecyclerView.OnScrollListener as OnScrollListener1
+import kotlinx.android.synthetic.main.layout_common_title.*
 
 /**
  *
@@ -28,7 +33,8 @@ import android.support.v7.widget.RecyclerView.OnScrollListener as OnScrollListen
  * 描述：please add a description here
  * 时间：2019-07-02
  */
-class HomeFragment : BaseFragment(), HomeContract.View{
+class HomeFragment : BaseFragment(), HomeContract.View, OnRefreshListener, OnLoadMoreListener {
+
     private var mTitle: String? = null
 
     private val mPresenter = HomePresenter()
@@ -38,6 +44,8 @@ class HomeFragment : BaseFragment(), HomeContract.View{
     private var mBannerView: Banner? = null
 
     private var pageIndex = 0
+
+    private var scrollY = 0
 
     companion object {
         fun getInstance(title: String): HomeFragment {
@@ -55,19 +63,50 @@ class HomeFragment : BaseFragment(), HomeContract.View{
 
     override fun initView() {
         mPresenter.attachView(this)
+
+        iv_back.visibility = View.GONE
+        val layoutParams = v_status_bar_placeholder_layout_common_title.layoutParams
+        layoutParams.height = activity!!.let { StatusBarUtil.getStatusBarHeight(it) }
+
         initRefreshLayout()
         initRecyclerView()
         initBannerView()
     }
 
     private fun initRefreshLayout() {
-        srl_home_fragment.setOnRefreshListener { onRefresh() }
-        srl_home_fragment.setOnLoadMoreListener { onLoadMore() }
+        srl_home_fragment.setOnRefreshListener(this@HomeFragment)
+        srl_home_fragment.setOnLoadMoreListener(this@HomeFragment)
     }
 
     private fun initRecyclerView() {
         rv_home_fragment.layoutManager = LinearLayoutManager(context)
         rv_home_fragment.adapter = mHomeAdapter
+
+        rv_home_fragment.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                LogUtils.d("onScrolled-----------######    $newState")
+            }
+
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val statusBarHeight = activity!!.let { StatusBarUtil.getStatusBarHeight(it) }
+                LogUtils.d("onScrolled-----------######    $dy--------------$statusBarHeight")
+                scrollY += dy
+
+                if ((1.0 * scrollY / ConvertUtils.dp2px(180f)).toFloat() > 0.5f){
+                    activity?.let { StatusBarUtil.setStatusBarDarkTheme(it,true) }
+                }else{
+                    activity?.let { StatusBarUtil.setStatusBarDarkTheme(it,false) }
+                }
+
+
+
+                ll_layout_common_title.alpha = (1.0 * scrollY / (ConvertUtils.dp2px(115f) - statusBarHeight)).toFloat()
+            }
+
+        })
+
 
         mHomeAdapter?.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, view, position ->
             val item: Data = adapter.getItem(position) as Data
@@ -85,7 +124,8 @@ class HomeFragment : BaseFragment(), HomeContract.View{
         mBannerView?.isAutoPlay(true)
     }
 
-    private fun onRefresh() {
+
+    override fun onRefresh(refreshLayout: RefreshLayout) {
         pageIndex = 0
         LogUtils.d("onRefresh-----------")
         srl_home_fragment.resetNoMoreData()
@@ -93,7 +133,7 @@ class HomeFragment : BaseFragment(), HomeContract.View{
         mPresenter.getHomeArticle(true, pageIndex)
     }
 
-    private fun onLoadMore() {
+    override fun onLoadMore(refreshLayout: RefreshLayout) {
         mPresenter.getHomeArticle(false, pageIndex)
     }
 
@@ -103,6 +143,7 @@ class HomeFragment : BaseFragment(), HomeContract.View{
     }
 
     override fun showLoading() {
+
     }
 
     override fun dismissLoading() {

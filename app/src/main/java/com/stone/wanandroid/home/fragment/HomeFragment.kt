@@ -2,8 +2,11 @@ package com.stone.wanandroid.home.fragment
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
+import android.view.View
 import com.blankj.utilcode.util.LogUtils
+import com.chad.library.adapter.base.BaseQuickAdapter
 import com.stone.common.base.BaseFragment
 import com.stone.wanandroid.R
 import com.stone.wanandroid.home.adapter.HomeAdapter
@@ -12,10 +15,12 @@ import com.stone.wanandroid.home.bean.HomeBannerBean
 import com.stone.wanandroid.home.bean.HomeBean
 import com.stone.wanandroid.home.contract.HomeContract
 import com.stone.wanandroid.home.presenter.HomePresenter
+import com.stone.wanandroid.util.ActivityRouter
 import com.stone.wanandroid.util.BannerImageLoader
 import com.youth.banner.Banner
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.item_home_banner.view.*
+import android.support.v7.widget.RecyclerView.OnScrollListener as OnScrollListener1
 
 /**
  *
@@ -23,8 +28,7 @@ import kotlinx.android.synthetic.main.item_home_banner.view.*
  * 描述：please add a description here
  * 时间：2019-07-02
  */
-class HomeFragment : BaseFragment(), HomeContract.View {
-
+class HomeFragment : BaseFragment(), HomeContract.View{
     private var mTitle: String? = null
 
     private val mPresenter = HomePresenter()
@@ -51,13 +55,25 @@ class HomeFragment : BaseFragment(), HomeContract.View {
 
     override fun initView() {
         mPresenter.attachView(this)
-        srl_home_fragment.setOnRefreshListener { onRefresh() }
-        srl_home_fragment.setOnLoadMoreListener{onLoadMore()}
+        initRefreshLayout()
+        initRecyclerView()
+        initBannerView()
+    }
 
+    private fun initRefreshLayout() {
+        srl_home_fragment.setOnRefreshListener { onRefresh() }
+        srl_home_fragment.setOnLoadMoreListener { onLoadMore() }
+    }
+
+    private fun initRecyclerView() {
         rv_home_fragment.layoutManager = LinearLayoutManager(context)
         rv_home_fragment.adapter = mHomeAdapter
 
-        initBannerView()
+        mHomeAdapter?.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, view, position ->
+            val item: Data = adapter.getItem(position) as Data
+            val link = item.link
+            context?.let { ActivityRouter.startCommonWebView(it, link, "") }
+        }
     }
 
     private fun initBannerView() {
@@ -74,16 +90,16 @@ class HomeFragment : BaseFragment(), HomeContract.View {
         LogUtils.d("onRefresh-----------")
         srl_home_fragment.resetNoMoreData()
         mPresenter.getHomeBanner()
-        mPresenter.getHomeArticle(true,pageIndex)
+        mPresenter.getHomeArticle(true, pageIndex)
     }
 
     private fun onLoadMore() {
-        mPresenter.getHomeArticle(false,pageIndex)
+        mPresenter.getHomeArticle(false, pageIndex)
     }
 
     override fun lazyLoad() {
         mPresenter.getHomeBanner()
-        mPresenter.getHomeArticle(false,pageIndex)
+        mPresenter.getHomeArticle(false, pageIndex)
     }
 
     override fun showLoading() {
@@ -119,15 +135,15 @@ class HomeFragment : BaseFragment(), HomeContract.View {
         var curPage = bean.curPage
         var totalPage = bean.total
 
-        if(curPage != totalPage){
-            if (pageIndex == 0){
+        if (curPage != totalPage) {
+            if (pageIndex == 0) {
                 mHomeAdapter?.setNewData(datas)
-            }else{
+            } else {
                 mHomeAdapter?.addData(datas)
             }
             srl_home_fragment.finishLoadMore()
-            pageIndex ++
-        }else{
+            pageIndex++
+        } else {
             mHomeAdapter?.setNewData(datas)
             srl_home_fragment.finishLoadMoreWithNoMoreData()
         }
@@ -137,7 +153,6 @@ class HomeFragment : BaseFragment(), HomeContract.View {
         LogUtils.d("getHomeArticleFailed-----------$message")
         srl_home_fragment.finishLoadMore()
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

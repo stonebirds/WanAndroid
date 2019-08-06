@@ -1,19 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?selectableItemBackground"
                 android:clickable="true"
-                android:orientation="vertical"
-                android:padding="15dp">
+                android:orientation="vertical">
 
 
     <TextView
             android:id="@+id/tv_title_home_article_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="标题"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="16dp"
             android:textColor="@color/black_333333"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            tools:text="标题"/>
 
+    <ImageView
+            android:id="@+id/iv_flavor_home_article_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_title_home_article_item"
+            android:layout_marginLeft="16dp"
+            android:layout_marginTop="10dp"
+            android:clickable="true"
+            android:src="@drawable/icon_unflavor"/>
+
+    <TextView
+            android:id="@+id/tv_author_home_article_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_title_home_article_item"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/iv_flavor_home_article_item"
+            android:textColor="@color/gray_999999"
+            android:textSize="12sp"
+            tools:text="@string/article_author"/>
+
+    <TextView
+            android:id="@+id/tv_time_home_article_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/tv_author_home_article_item"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:textColor="@color/gray_999999"
+            android:textSize="12sp"
+            tools:text="2019-08-04"/>
+
+    <View android:layout_width="match_parent"
+          android:layout_height="0.5dp"
+          android:layout_below="@+id/iv_flavor_home_article_item"
+          android:layout_marginLeft="16dp"
+          android:layout_marginTop="10dp"
+          android:background="@color/gray_cecece"/>
 </RelativeLayout>

@@ -5,6 +5,7 @@ import android.support.v4.app.FragmentTransaction
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
 import com.stone.common.base.BaseActivity
+import com.stone.common.util.StatusBarUtil
 import com.stone.wanandroid.category.fragment.CategoryFragment
 import com.stone.wanandroid.home.bean.TabEntity
 import com.stone.wanandroid.home.fragment.HomeFragment
@@ -42,8 +43,17 @@ class MainActivity : BaseActivity(), OnTabSelectListener {
     private val mTabEntities = ArrayList<CustomTabEntity>()
     private var mIndex = 0
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun layoutId(): Int {
+        return R.layout.activity_main
+    }
+
+    override fun initData() {
+    }
+
+    override fun initView() {
+        StatusBarUtil.setRootViewFitsSystemWindows(this,false)
+        StatusBarUtil.setStatusBarDarkTheme(this,false)
+
         (0 until mTitles.size).mapTo(mTabEntities) {
             TabEntity(
                 mTitles[it],
@@ -56,17 +66,6 @@ class MainActivity : BaseActivity(), OnTabSelectListener {
         tb_main_activity.setOnTabSelectListener(this)
         tb_main_activity.currentTab = mIndex
         selectFragment(mIndex)
-    }
-
-    override fun layoutId(): Int {
-        return R.layout.activity_main
-    }
-
-    override fun initData() {
-    }
-
-    override fun initView() {
-
     }
 
     override fun start() {

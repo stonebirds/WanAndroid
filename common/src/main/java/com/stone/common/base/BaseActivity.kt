@@ -9,6 +9,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import com.classic.common.MultipleStatusView
+import com.stone.common.util.StatusBarUtil
 import io.reactivex.annotations.NonNull
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
@@ -29,12 +30,23 @@ abstract class BaseActivity : AppCompatActivity(),EasyPermissions.PermissionCall
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layoutId())
-        initData()
+
+        initStatusBar()
+
         initView()
+        initData()
         start()
         initListener()
+    }
 
-
+    private fun initStatusBar() {
+        StatusBarUtil.setRootViewFitsSystemWindows(this,true)
+        StatusBarUtil.setTranslucentStatus(this)
+        if (!StatusBarUtil.setStatusBarDarkTheme(this, true)) {
+            //如果不支持设置深色风格 为了兼容总不能让状态栏白白的看不清, 于是设置一个状态栏颜色为半透明,
+            //这样半透明+白=灰, 状态栏的文字能看得清
+            StatusBarUtil.setStatusBarColor(this,0xFFFFFF)
+        }
     }
 
     private fun initListener() {

@@ -1,4 +1,5 @@
 package com.stone.common.base
+
 /**
  *
  * 作者：李飞磊
@@ -6,9 +7,5 @@ package com.stone.common.base
  * 时间：${DATE}
  */
 interface IBaseView {
-
-    fun showLoading()
-
-    fun dismissLoading()
 
 }

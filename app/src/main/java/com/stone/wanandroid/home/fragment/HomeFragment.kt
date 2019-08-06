@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import com.blankj.utilcode.util.ConvertUtils
 import com.blankj.utilcode.util.LogUtils
+import com.blankj.utilcode.util.ToastUtils
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener
@@ -37,9 +38,9 @@ class HomeFragment : BaseFragment(), HomeContract.View, OnRefreshListener, OnLoa
 
     private var mTitle: String? = null
 
-    private val mPresenter = HomePresenter()
+    private val mPresenter by lazy { HomePresenter() }
 
-    private val mHomeAdapter: HomeAdapter? = HomeAdapter(R.layout.item_home_articl)
+    private val mHomeAdapter by lazy { HomeAdapter(R.layout.item_home_articl) }
 
     private var mBannerView: Banner? = null
 
@@ -94,10 +95,10 @@ class HomeFragment : BaseFragment(), HomeContract.View, OnRefreshListener, OnLoa
                 LogUtils.d("onScrolled-----------######    $dy--------------$statusBarHeight")
                 scrollY += dy
 
-                if ((1.0 * scrollY / ConvertUtils.dp2px(180f)).toFloat() > 0.5f){
-                    activity?.let { StatusBarUtil.setStatusBarDarkTheme(it,true) }
-                }else{
-                    activity?.let { StatusBarUtil.setStatusBarDarkTheme(it,false) }
+                if ((1.0 * scrollY / ConvertUtils.dp2px(180f)).toFloat() > 0.5f) {
+                    activity?.let { StatusBarUtil.setStatusBarDarkTheme(it, true) }
+                } else {
+                    activity?.let { StatusBarUtil.setStatusBarDarkTheme(it, false) }
                 }
 
 
@@ -138,15 +139,9 @@ class HomeFragment : BaseFragment(), HomeContract.View, OnRefreshListener, OnLoa
     }
 
     override fun lazyLoad() {
+        showProgressDialog()
         mPresenter.getHomeBanner()
         mPresenter.getHomeArticle(false, pageIndex)
-    }
-
-    override fun showLoading() {
-
-    }
-
-    override fun dismissLoading() {
     }
 
     override fun getHomeBannerSuccess(date: List<HomeBannerBean>) {
@@ -171,6 +166,8 @@ class HomeFragment : BaseFragment(), HomeContract.View, OnRefreshListener, OnLoa
     }
 
     override fun getHomeArticleSuccess(bean: HomeBean) {
+        hideProgressDialog()
+
         val datas = bean.datas
 
         var curPage = bean.curPage
@@ -191,8 +188,10 @@ class HomeFragment : BaseFragment(), HomeContract.View, OnRefreshListener, OnLoa
     }
 
     override fun getHomeArticleFailed(errCode: Int, message: String) {
+        hideProgressDialog()
         LogUtils.d("getHomeArticleFailed-----------$message")
         srl_home_fragment.finishLoadMore()
+        ToastUtils.showShort(message)
     }
 
     override fun onDestroy() {

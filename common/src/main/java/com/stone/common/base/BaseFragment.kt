@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.classic.common.MultipleStatusView
+import com.stone.common.dialog.SProgressDialog
 import io.reactivex.annotations.NonNull
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
@@ -32,7 +33,9 @@ abstract class BaseFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     /**
      * 多种状态的 View 的切换
      */
-    protected var mLayoutStatusView: MultipleStatusView? = null
+    protected val mLayoutStatusView: MultipleStatusView by lazy { MultipleStatusView(context) }
+
+    protected var mProgressDialog: SProgressDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(getLayoutId(), null)
@@ -83,11 +86,6 @@ abstract class BaseFragment : Fragment(), EasyPermissions.PermissionCallbacks {
      */
     abstract fun lazyLoad()
 
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
-
     /**
      * 重写要申请权限的Activity或者Fragment的onRequestPermissionsResult()方法，
      * 在里面调用EasyPermissions.onRequestPermissionsResult()，实现回调。
@@ -136,4 +134,19 @@ abstract class BaseFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                 .show()
         }
     }
+
+    fun showProgressDialog() {
+        mProgressDialog = context?.let { SProgressDialog(it) }
+        mProgressDialog?.show()
+    }
+
+    fun hideProgressDialog() {
+        mProgressDialog?.dismiss()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mProgressDialog?.dismiss()
+    }
+
 }

@@ -33,7 +33,7 @@ class HomePresenter : BasePresenter<HomeContract.View>(), HomeContract.Presenter
                 }
 
                 override fun onFailed(errorCode: Int, errorMsg: String) {
-
+                    mView?.getHomeBannerFailed(errorCode, errorMsg)
                 }
             })
     }
@@ -53,6 +53,7 @@ class HomePresenter : BasePresenter<HomeContract.View>(), HomeContract.Presenter
                 }
 
                 override fun onFailed(errorCode: Int, errorMsg: String) {
+                    mView?.getHomeArticleFailed(errorCode, errorMsg)
                 }
 
             })

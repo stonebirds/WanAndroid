@@ -1,1 +1,1 @@
-include ':app', ':common', ':net', ':multiple-status-view'
+include ':app', ':common', ':multiple-status-view'

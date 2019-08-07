@@ -1,8 +1,0 @@
-<resources>
-    <string name="app_name">net</string>
-    <string name="service_error">服务器出错</string>
-    <string name="not_found">请求路径错误</string>
-    <string name="timeout">连接超时</string>
-    <string name="network_wrong">网络出错</string>
-    <string name="unexpected_error">未知错误</string>
-</resources>

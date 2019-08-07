@@ -1,4 +1,4 @@
-package com.stone.net.bean
+package com.stone.wanandroid.net.bean
 
 data class BaseResult<T>(
     var errorCode: Int = 0,

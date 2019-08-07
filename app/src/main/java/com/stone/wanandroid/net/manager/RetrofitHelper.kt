@@ -1,13 +1,17 @@
-package com.stone.net.manager
+package com.stone.wanandroid.net.manager
 
-import com.stone.net.BuildConfig
-import com.stone.net.config.NetUrl
+import com.franmontiel.persistentcookiejar.ClearableCookieJar
+import com.franmontiel.persistentcookiejar.PersistentCookieJar
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor
+import com.stone.wanandroid.BuildConfig
+import com.stone.wanandroid.WanAndroidApplication
+import com.stone.wanandroid.net.config.NetUrl
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import java.util.concurrent.TimeUnit
 
 object RetrofitHelper {
@@ -16,12 +20,18 @@ object RetrofitHelper {
     private const val WRITE_TIME_OUT = 30
     private const val READ_TIME_OUT = 30
 
+
     private fun initOkHttpClient(): OkHttpClient {
         val builder = OkHttpClient.Builder()
+        val setCookieCache = SetCookieCache()
+        val sharedPrefsCookiePersistor = SharedPrefsCookiePersistor(WanAndroidApplication.getContext())
+        sharedPrefsCookiePersistor.loadAll()
+        val cookieJar: ClearableCookieJar = PersistentCookieJar(setCookieCache, sharedPrefsCookiePersistor)
 
         builder.connectTimeout(CONNECT_TIME_OUT.toLong(), TimeUnit.SECONDS)
             .writeTimeout(WRITE_TIME_OUT.toLong(), TimeUnit.SECONDS)
             .readTimeout(READ_TIME_OUT.toLong(), TimeUnit.SECONDS)
+            .cookieJar(cookieJar)
         if (BuildConfig.DEBUG) {
             builder.addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
         } else {

@@ -1,15 +1,14 @@
 package com.stone.wanandroid.home.presenter
 
-import com.blankj.utilcode.util.LogUtils
 import com.stone.common.base.BasePresenter
-import com.stone.net.bean.BaseResult
-import com.stone.net.manager.RetrofitHelper
-import com.stone.net.manager.RxHelper
-import com.stone.net.manager.RxSubscribe
+import com.stone.wanandroid.net.bean.BaseResult
+import com.stone.wanandroid.net.manager.RetrofitHelper
+import com.stone.wanandroid.net.manager.RxHelper
+import com.stone.wanandroid.net.manager.RxSubscribe
 import com.stone.wanandroid.home.bean.HomeBannerBean
 import com.stone.wanandroid.home.bean.HomeBean
 import com.stone.wanandroid.home.contract.HomeContract
-import com.stone.wanandroid.net.ApiService
+import com.stone.wanandroid.net.config.ApiService
 
 /**
  *

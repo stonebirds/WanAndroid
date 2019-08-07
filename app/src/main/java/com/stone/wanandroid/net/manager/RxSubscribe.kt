@@ -1,4 +1,4 @@
-package com.stone.net.manager
+package com.stone.wanandroid.net.manager
 
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable

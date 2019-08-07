@@ -1,4 +1,4 @@
-package com.stone.net.config
+package com.stone.wanandroid.net.config
 
 object NetUrl {
     //BaseUrl

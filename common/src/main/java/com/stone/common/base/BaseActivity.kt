@@ -9,6 +9,7 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.Toast
 import com.classic.common.MultipleStatusView
+import com.stone.common.dialog.SProgressDialog
 import com.stone.common.util.StatusBarUtil
 import io.reactivex.annotations.NonNull
 import pub.devrel.easypermissions.AppSettingsDialog
@@ -21,11 +22,11 @@ import pub.devrel.easypermissions.EasyPermissions
  * 描述：please add a description here
  * 时间：${DATE}
  */
-abstract class BaseActivity : AppCompatActivity(),EasyPermissions.PermissionCallbacks {
-    /**
-     * 多种状态的 View 的切换
-     */
-    protected var mLayoutStatusView: MultipleStatusView? = null
+abstract class BaseActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
+    //多种状态的 View 的切换
+    private var mLayoutStatusView: MultipleStatusView? = null
+    //加载进度框
+    private var mProgressDialog: SProgressDialog? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,12 +41,12 @@ abstract class BaseActivity : AppCompatActivity(),EasyPermissions.PermissionCall
     }
 
     private fun initStatusBar() {
-        StatusBarUtil.setRootViewFitsSystemWindows(this,true)
+        StatusBarUtil.setRootViewFitsSystemWindows(this, true)
         StatusBarUtil.setTranslucentStatus(this)
         if (!StatusBarUtil.setStatusBarDarkTheme(this, true)) {
             //如果不支持设置深色风格 为了兼容总不能让状态栏白白的看不清, 于是设置一个状态栏颜色为半透明,
             //这样半透明+白=灰, 状态栏的文字能看得清
-            StatusBarUtil.setStatusBarColor(this,0xFFFFFF)
+            StatusBarUtil.setStatusBarColor(this, 0xFFFFFF)
         }
     }
 
@@ -96,12 +97,6 @@ abstract class BaseActivity : AppCompatActivity(),EasyPermissions.PermissionCall
         imm.hideSoftInputFromWindow(mEditText.windowToken, 0)
     }
 
-
-    override fun onDestroy() {
-        super.onDestroy()
-    }
-
-
     /**
      * 重写要申请权限的Activity或者Fragment的onRequestPermissionsResult()方法，
      * 在里面调用EasyPermissions.onRequestPermissionsResult()，实现回调。
@@ -143,12 +138,26 @@ abstract class BaseActivity : AppCompatActivity(),EasyPermissions.PermissionCall
         if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
             Toast.makeText(this, "已拒绝权限" + sb + "并不再询问", Toast.LENGTH_SHORT).show()
             AppSettingsDialog.Builder(this)
-                    .setRationale("此功能需要" + sb + "权限，否则无法正常使用，是否打开设置")
-                    .setPositiveButton("好")
-                    .setNegativeButton("不行")
-                    .build()
-                    .show()
+                .setRationale("此功能需要" + sb + "权限，否则无法正常使用，是否打开设置")
+                .setPositiveButton("好")
+                .setNegativeButton("不行")
+                .build()
+                .show()
         }
+    }
+
+    fun showProgressDialog() {
+        mProgressDialog = SProgressDialog(this)
+        mProgressDialog?.show()
+    }
+
+    fun hideProgressDialog() {
+        mProgressDialog?.dismiss()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mProgressDialog?.dismiss()
     }
 
 }

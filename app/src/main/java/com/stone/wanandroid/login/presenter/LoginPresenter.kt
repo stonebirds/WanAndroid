@@ -1,13 +1,14 @@
 package com.stone.wanandroid.login.presenter
 
 import com.stone.common.base.BasePresenter
+import com.stone.wanandroid.login.bean.LoginBean
+import com.stone.wanandroid.login.contract.LoginContract
+import com.stone.wanandroid.manager.UserInfoManager
 import com.stone.wanandroid.net.bean.BaseResult
+import com.stone.wanandroid.net.config.ApiService
 import com.stone.wanandroid.net.manager.RetrofitHelper
 import com.stone.wanandroid.net.manager.RxHelper
 import com.stone.wanandroid.net.manager.RxSubscribe
-import com.stone.wanandroid.login.bean.LoginBean
-import com.stone.wanandroid.login.contract.LoginContract
-import com.stone.wanandroid.net.config.ApiService
 
 /**
  *
@@ -23,6 +24,8 @@ class LoginPresenter : BasePresenter<LoginContract.View>(), LoginContract.Presen
             .subscribe(object : RxSubscribe<BaseResult<LoginBean>>() {
                 override fun onSuccess(data: BaseResult<LoginBean>) {
                     if (data.errorCode == 0) {
+                        //保存用户信息
+                        UserInfoManager.saveUserInfo(data.data)
                         mView?.loginSuccess(data.data)
                     } else {
                         mView?.loginFailed(data.errorCode, data.errorMsg)

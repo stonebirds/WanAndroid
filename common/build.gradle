@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
+apply plugin: 'org.greenrobot.greendao'
 
 android {
     compileSdkVersion 28
@@ -66,4 +67,5 @@ dependencies {
     api 'com.blankj:utilcode:1.23.7'
     api 'com.google.code.gson:gson:2.4'
     api 'com.github.franmontiel:PersistentCookieJar:v1.0.1'
+    api 'org.greenrobot:greendao:3.2.2'
 }

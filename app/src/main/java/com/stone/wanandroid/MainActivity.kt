@@ -1,6 +1,5 @@
 package com.stone.wanandroid
 
-import android.os.Bundle
 import android.support.v4.app.FragmentTransaction
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
@@ -51,8 +50,8 @@ class MainActivity : BaseActivity(), OnTabSelectListener {
     }
 
     override fun initView() {
-        StatusBarUtil.setRootViewFitsSystemWindows(this,false)
-        StatusBarUtil.setStatusBarDarkTheme(this,false)
+        StatusBarUtil.setRootViewFitsSystemWindows(this, false)
+        StatusBarUtil.setStatusBarDarkTheme(this, false)
 
         (0 until mTitles.size).mapTo(mTabEntities) {
             TabEntity(
@@ -83,29 +82,42 @@ class MainActivity : BaseActivity(), OnTabSelectListener {
         val transaction = supportFragmentManager.beginTransaction()
         hideFragment(transaction)
         when (position) {
-            FRAGMENT_HOME -> mHomeFragment?.let {
-                transaction.show(it)
-            } ?: HomeFragment.getInstance(mTitles[position]).let {
-                mHomeFragment = it
-                transaction.add(R.id.fl_container_main_activity, it, "home")
+            FRAGMENT_HOME -> {
+                StatusBarUtil.setStatusBarDarkTheme(this, HomeFragment.isStatusBarDark)
+                mHomeFragment?.let {
+                    transaction.show(it)
+                } ?: HomeFragment.getInstance(mTitles[position]).let {
+                    mHomeFragment = it
+                    transaction.add(R.id.fl_container_main_activity, it, "home")
+                }
             }
-            FRAGMENT_PROJECT -> mProjectFragment?.let {
-                transaction.show(it)
-            } ?: ProjectFragment.getInstance(mTitles[position]).let {
-                mProjectFragment = it
-                transaction.add(R.id.fl_container_main_activity, it, "project")
+            FRAGMENT_PROJECT -> {
+                StatusBarUtil.setStatusBarDarkTheme(this, true)
+                mProjectFragment?.let {
+                    transaction.show(it)
+                } ?: ProjectFragment.getInstance(mTitles[position]).let {
+                    mProjectFragment = it
+                    transaction.add(R.id.fl_container_main_activity, it, "project")
+                }
             }
-            FRAGMENT_CATEGORY -> mCategoryFragment?.let {
-                transaction.show(it)
-            } ?: CategoryFragment.getInstance(mTitles[position]).let {
-                mCategoryFragment = it
-                transaction.add(R.id.fl_container_main_activity, it, "category")
+            FRAGMENT_CATEGORY -> {
+                StatusBarUtil.setStatusBarDarkTheme(this, true)
+                mCategoryFragment?.let {
+                    transaction.show(it)
+                } ?: CategoryFragment.getInstance(mTitles[position]).let {
+                    mCategoryFragment = it
+                    transaction.add(R.id.fl_container_main_activity, it, "category")
+                }
             }
-            FRAGMENT_MINE -> mMineFragment?.let {
-                transaction.show(it)
-            } ?: MineFragment.getInstance(mTitles[position]).let {
-                mMineFragment = it
-                transaction.add(R.id.fl_container_main_activity, it, "mine")
+            FRAGMENT_MINE -> {
+                StatusBarUtil.setStatusBarDarkTheme(this, true)
+
+                mMineFragment?.let {
+                    transaction.show(it)
+                } ?: MineFragment.getInstance(mTitles[position]).let {
+                    mMineFragment = it
+                    transaction.add(R.id.fl_container_main_activity, it, "mine")
+                }
             }
             else -> {
 

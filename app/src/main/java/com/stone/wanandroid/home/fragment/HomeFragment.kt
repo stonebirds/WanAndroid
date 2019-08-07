@@ -49,6 +49,8 @@ class HomeFragment : BaseFragment(), HomeContract.View, OnRefreshListener, OnLoa
     private var scrollY = 0
 
     companion object {
+        var isStatusBarDark: Boolean = false
+
         fun getInstance(title: String): HomeFragment {
             val fragment = HomeFragment()
             val bundle = Bundle()
@@ -66,6 +68,7 @@ class HomeFragment : BaseFragment(), HomeContract.View, OnRefreshListener, OnLoa
         mPresenter.attachView(this)
 
         iv_back.visibility = View.GONE
+        tv_title.text = "玩安卓"
         val layoutParams = v_status_bar_placeholder_layout_common_title.layoutParams
         layoutParams.height = activity!!.let { StatusBarUtil.getStatusBarHeight(it) }
 
@@ -96,8 +99,10 @@ class HomeFragment : BaseFragment(), HomeContract.View, OnRefreshListener, OnLoa
                 scrollY += dy
 
                 if ((1.0 * scrollY / ConvertUtils.dp2px(180f)).toFloat() > 0.5f) {
+                    isStatusBarDark = true
                     activity?.let { StatusBarUtil.setStatusBarDarkTheme(it, true) }
                 } else {
+                    isStatusBarDark = false
                     activity?.let { StatusBarUtil.setStatusBarDarkTheme(it, false) }
                 }
 

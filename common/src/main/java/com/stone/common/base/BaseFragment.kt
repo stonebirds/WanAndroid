@@ -22,20 +22,14 @@ import pub.devrel.easypermissions.EasyPermissions
  * 时间：${DATE}
  */
 abstract class BaseFragment : Fragment(), EasyPermissions.PermissionCallbacks {
-    /**
-     * 视图是否加载完毕
-     */
+    //视图是否加载完毕
     private var isViewPrepare = false
-    /**
-     * 数据是否加载过了
-     */
+    //数据是否加载过了
     private var hasLoadData = false
-    /**
-     * 多种状态的 View 的切换
-     */
-    protected val mLayoutStatusView: MultipleStatusView by lazy { MultipleStatusView(context) }
+    //多种状态的 View 的切换
+    private val mLayoutStatusView: MultipleStatusView by lazy { MultipleStatusView(context) }
 
-    protected var mProgressDialog: SProgressDialog? = null
+    private var mProgressDialog: SProgressDialog? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(getLayoutId(), null)

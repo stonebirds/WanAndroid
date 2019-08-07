@@ -11,5 +11,5 @@ object CommonConstant {
     const val COMMON_WEB_URL: String = "COMMON_WEB_URL"
 
     //WebView标题
-    val COMMON_WEB_TITLE: String = "COMMON_WEB_TITLE"
+    const val COMMON_WEB_TITLE: String = "COMMON_WEB_TITLE"
 }

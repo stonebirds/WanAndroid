@@ -5,9 +5,11 @@ import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.View
 import com.blankj.utilcode.util.ColorUtils
+import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.stone.common.base.BaseActivity
 import com.stone.wanandroid.R
+import com.stone.wanandroid.constant.CommonConstant
 import com.stone.wanandroid.login.bean.LoginBean
 import com.stone.wanandroid.login.contract.LoginContract
 import com.stone.wanandroid.login.presenter.LoginPresenter
@@ -80,6 +82,7 @@ class LoginActivity : BaseActivity(), LoginContract.View, TextWatcher, View.OnCl
     }
 
     private fun doLogin() {
+        showProgressDialog()
         mPresenter.login(username!!, password!!)
     }
 
@@ -91,10 +94,12 @@ class LoginActivity : BaseActivity(), LoginContract.View, TextWatcher, View.OnCl
     }
 
     override fun loginSuccess(bean: LoginBean) {
-        
+        hideProgressDialog()
+        finish()
     }
 
     override fun loginFailed(errorCode: Int, errorMsg: String) {
+        hideProgressDialog()
         ToastUtils.showShort(errorMsg)
     }
 

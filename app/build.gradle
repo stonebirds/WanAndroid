@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'org.greenrobot.greendao'
+
 android {
     compileSdkVersion 28
     packagingOptions {
@@ -31,7 +33,12 @@ android {
         sourceCompatibility 1.8
         targetCompatibility 1.8
     }
+}
 
+greendao {
+    schemaVersion 1
+    daoPackage 'com.stone.wanandroid.greendao'
+    targetGenDir 'src/main/java'
 }
 
 androidExtensions {

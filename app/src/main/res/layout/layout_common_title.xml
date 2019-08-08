@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content" xmlns:tools="http://schemas.android.com/tools"
-              android:id="@+id/ll_layout_common_title"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/ll_layout_common_title" android:layout_width="match_parent"
+              android:layout_height="wrap_content"
               android:orientation="vertical">
 
     <View
@@ -23,13 +23,16 @@
                 android:layout_height="45dp"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentLeft="true"
-                android:scaleType="center"
+                android:layout_centerVertical="true"
+                android:background="?selectableItemBackground"
+                android:scaleType="centerInside"
                 android:src="@drawable/icon_back"/>
 
         <TextView
                 android:id="@+id/tv_title"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_centerInParent="true"
                 android:layout_marginEnd="45dp"
                 android:layout_marginRight="45dp"
                 android:layout_toEndOf="@id/iv_back"
@@ -37,11 +40,10 @@
                 android:ellipsize="end"
                 android:gravity="center"
                 android:lines="1"
-                android:layout_centerInParent="true"
                 android:singleLine="true"
-                tools:text="@string/app_name"
                 android:textColor="@color/black_333333"
-                android:textSize="18sp"/>
+                android:textSize="18sp"
+                tools:text="@string/app_name"/>
 
         <View
                 android:id="@+id/v_line"

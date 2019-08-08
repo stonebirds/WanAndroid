@@ -1,30 +1,225 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.scwang.smartrefresh.layout.SmartRefreshLayout
+<LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/refreshLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/white"
-        android:orientation="vertical"
-        app:srlEnablePureScrollMode="true">
+        android:orientation="vertical">
 
-    <LinearLayout
+    <include layout="@layout/layout_common_title"/>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            app:srlEnablePreviewInEditMode="false"
+            app:srlEnablePureScrollMode="true">
 
-        <TextView
-                android:id="@+id/btn_login"
+        <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:background="@color/black_333333"
-                android:clickable="true"
-                android:gravity="center"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp"
-                android:text="登录"
-                android:textColor="@color/white"
-                android:textSize="16sp"/>
-    </LinearLayout>
+                android:orientation="vertical">
 
-</com.scwang.smartrefresh.layout.SmartRefreshLayout>
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="@color/gray_f6f6f6"/>
+
+            <RelativeLayout
+                    android:id="@+id/btn_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="16dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/iv_head_mine_fragment"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/bg_mine"/>
+
+                <LinearLayout
+                        android:id="@+id/ll_user_info_mine_fragment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@+id/iv_head_mine_fragment"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                    <TextView
+                            android:id="@+id/tv_username_mine_fragment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="侠客行"
+                            android:textColor="@color/black_333333"
+                            android:textSize="18sp"
+                            android:textStyle="bold"/>
+
+                    <TextView
+                            android:id="@+id/tv_user_intro_mine_fragment"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:lineSpacingExtra="2dp"
+                            android:text="我是一只小小小小鸟，小鸟飞呀飞飞呀飞不高~~~~~~~~~~~~~~~"
+                            android:textColor="@color/black_666666"
+                            android:textSize="14sp"
+                            android:textStyle="bold"/>
+                </LinearLayout>
+
+                <TextView
+                        android:id="@+id/tv_user_info_mine_fragment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_toRightOf="@+id/iv_head_mine_fragment"
+                        android:lineSpacingExtra="10dp"
+                        android:text="请登录：\n登录之后你会拥有更加精彩的世界，不相信的话你可以试试呦~~~~~~"
+                        android:textColor="@color/black_333333"
+                        android:textSize="16sp"/>
+
+            </RelativeLayout>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="@color/gray_f6f6f6"/>
+
+            <RelativeLayout
+                    android:id="@+id/btn_flavor_mine_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?selectableItemBackground"
+                    android:clickable="true"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="10dp">
+
+                <ImageView
+                        android:id="@+id/iv_left_flavor_mine_fragment"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/icon_flavor_black"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/iv_left_flavor_mine_fragment"
+                        android:text="我的收藏"
+                        android:textColor="@color/black_333333"
+                        android:textSize="16sp"/>
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/icon_right_black"/>
+
+            </RelativeLayout>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="16dp"
+                    android:background="@color/gray_f6f6f6"/>
+
+            <RelativeLayout
+                    android:id="@+id/btn_about_mine_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?selectableItemBackground"
+                    android:clickable="true"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="10dp">
+
+                <ImageView
+                        android:id="@+id/iv_left_about_mine_fragment"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/icon_about_us_black"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/iv_left_about_mine_fragment"
+                        android:text="关于我们"
+                        android:textColor="@color/black_333333"
+                        android:textSize="16sp"/>
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/icon_right_black"/>
+
+            </RelativeLayout>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="@color/gray_f6f6f6"/>
+
+            <RelativeLayout
+                    android:id="@+id/btn_setting_mine_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?selectableItemBackground"
+                    android:clickable="true"
+                    android:paddingLeft="16dp"
+                    android:paddingTop="10dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="10dp">
+
+                <ImageView
+                        android:id="@+id/iv_left_setting_mine_fragment"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/icon_setting_black"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toRightOf="@+id/iv_left_setting_mine_fragment"
+                        android:text="设置"
+                        android:textColor="@color/black_333333"
+                        android:textSize="16sp"/>
+
+                <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:src="@drawable/icon_right_black"/>
+
+            </RelativeLayout>
+
+            <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="16dp"
+                    android:background="@color/gray_f6f6f6"/>
+        </LinearLayout>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</LinearLayout>

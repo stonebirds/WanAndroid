@@ -3,7 +3,7 @@ package com.stone.wanandroid.home.contract
 import com.stone.common.base.IBaseView
 import com.stone.common.base.IPresenter
 import com.stone.wanandroid.home.bean.HomeBannerBean
-import com.stone.wanandroid.home.bean.HomeBean
+import com.stone.wanandroid.home.bean.ArticleBean
 
 interface HomeContract {
     interface View : IBaseView {
@@ -11,7 +11,7 @@ interface HomeContract {
 
         fun getHomeBannerFailed(errCode: Int, message: String)
 
-        fun getHomeArticleSuccess(bean: HomeBean)
+        fun getHomeArticleSuccess(bean: ArticleBean)
 
         fun getHomeArticleFailed(errCode: Int, message: String)
     }

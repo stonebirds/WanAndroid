@@ -1,7 +1,7 @@
 package com.stone.wanandroid.home.bean
 
 
-data class HomeBean(
+data class ArticleBean(
     val curPage: Int,
     val datas: List<Data>,
     val offset: Int,

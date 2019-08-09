@@ -6,7 +6,7 @@ import com.stone.wanandroid.net.manager.RetrofitHelper
 import com.stone.wanandroid.net.manager.RxHelper
 import com.stone.wanandroid.net.manager.RxSubscribe
 import com.stone.wanandroid.home.bean.HomeBannerBean
-import com.stone.wanandroid.home.bean.HomeBean
+import com.stone.wanandroid.home.bean.ArticleBean
 import com.stone.wanandroid.home.contract.HomeContract
 import com.stone.wanandroid.net.config.ApiService
 
@@ -23,10 +23,10 @@ class HomePresenter : BasePresenter<HomeContract.View>(), HomeContract.Presenter
             .compose(RxHelper.handleScheduler())
             .subscribe(object : RxSubscribe<BaseResult<List<HomeBannerBean>>>() {
                 override fun onSuccess(data: BaseResult<List<HomeBannerBean>>) {
-                    if (data.errorCode == 0){
+                    if (data.errorCode == 0) {
                         val list = data.data
                         mView?.getHomeBannerSuccess(list)
-                    }else{
+                    } else {
                         mView?.getHomeBannerFailed(data.errorCode, data.errorMsg)
                     }
                 }
@@ -37,16 +37,16 @@ class HomePresenter : BasePresenter<HomeContract.View>(), HomeContract.Presenter
             })
     }
 
-    override fun getHomeArticle(isRefresh : Boolean, page: Int) {
+    override fun getHomeArticle(isRefresh: Boolean, page: Int) {
         RetrofitHelper.createService(ApiService::class.java)
             .getArticleList(page)
             .compose(RxHelper.handleScheduler())
-            .subscribe(object : RxSubscribe<BaseResult<HomeBean>>(){
-                override fun onSuccess(data: BaseResult<HomeBean>) {
+            .subscribe(object : RxSubscribe<BaseResult<ArticleBean>>() {
+                override fun onSuccess(data: BaseResult<ArticleBean>) {
                     val errorCode = data.errorCode
                     if (errorCode == 0) {
                         mView?.getHomeArticleSuccess(data.data)
-                    }else{
+                    } else {
                         mView?.getHomeArticleFailed(data.errorCode, data.errorMsg)
                     }
                 }

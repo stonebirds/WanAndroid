@@ -2,7 +2,7 @@ package com.stone.wanandroid.net.config
 
 import com.stone.wanandroid.net.bean.BaseResult
 import com.stone.wanandroid.home.bean.HomeBannerBean
-import com.stone.wanandroid.home.bean.HomeBean
+import com.stone.wanandroid.home.bean.ArticleBean
 import com.stone.wanandroid.login.bean.LoginBean
 import io.reactivex.Observable
 import retrofit2.http.*
@@ -21,5 +21,8 @@ interface ApiService {
     fun getHomeBanner(): Observable<BaseResult<List<HomeBannerBean>>>
 
     @GET("article/list/{page}/json")
-    fun getArticleList(@Path("page") page: Int): Observable<BaseResult<HomeBean>>
+    fun getArticleList(@Path("page") page: Int): Observable<BaseResult<ArticleBean>>
+
+    @GET("article/listproject/{page}/json")
+    fun getProjectList(@Path("page") page: Int): Observable<BaseResult<ArticleBean>>
 }

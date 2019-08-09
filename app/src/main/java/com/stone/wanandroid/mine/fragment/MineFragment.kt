@@ -40,7 +40,6 @@ class MineFragment : BaseFragment(), View.OnClickListener {
 
     override fun initView() {
 
-        v_line.visibility = View.GONE
         iv_back.visibility = View.GONE
         tv_title.text = "我的"
 

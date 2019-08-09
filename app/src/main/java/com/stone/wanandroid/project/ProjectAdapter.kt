@@ -14,8 +14,11 @@ import com.stone.wanandroid.home.bean.Data
  * 时间：2019-08-09
  */
 class ProjectAdapter(layoutId: Int) : BaseQuickAdapter<Data, BaseViewHolder>(layoutId) {
+
     override fun convert(helper: BaseViewHolder, item: Data) {
+
         helper.setText(R.id.tv_title_project_list_item, item.title)
+
         helper.setText(R.id.tv_intro_project_list_item, item.desc)
         helper.setText(
             R.id.tv_author_project_list_item,

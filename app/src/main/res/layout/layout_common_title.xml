@@ -45,12 +45,24 @@
                 android:textSize="18sp"
                 tools:text="@string/app_name"/>
 
+        <ImageView
+                android:id="@+id/iv_right"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:visibility="gone"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="?selectableItemBackground"
+                android:scaleType="centerInside"
+                android:src="@drawable/icon_list"/>
+
         <View
                 android:id="@+id/v_line"
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
                 android:layout_alignParentBottom="true"
-                android:background="@color/gray_f6f6f6"/>
+                android:background="@color/gray_cecece"/>
 
     </RelativeLayout>
 </LinearLayout>

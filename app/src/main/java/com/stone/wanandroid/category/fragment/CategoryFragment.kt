@@ -2,7 +2,10 @@ package com.stone.wanandroid.category.fragment
 
 import com.stone.wanandroid.R
 import android.os.Bundle
+import android.view.View
 import com.stone.common.base.BaseFragment
+import com.stone.common.util.StatusBarUtil
+import kotlinx.android.synthetic.main.layout_common_title.*
 
 /**
  *
@@ -22,11 +25,16 @@ class CategoryFragment : BaseFragment() {
             return fragment
         }
     }
+
     override fun getLayoutId(): Int {
         return R.layout.fragment_category
     }
 
     override fun initView() {
+        iv_back.visibility = View.GONE
+        tv_title.text = "体系"
+        val layoutParams = v_status_bar_placeholder_layout_common_title.layoutParams
+        layoutParams.height = activity!!.let { StatusBarUtil.getStatusBarHeight(it) }
     }
 
     override fun lazyLoad() {

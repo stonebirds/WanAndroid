@@ -2,6 +2,7 @@ package com.stone.wanandroid.project.fragment
 
 import com.stone.wanandroid.R
 import android.os.Bundle
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -31,11 +32,14 @@ import kotlinx.android.synthetic.main.layout_common_title.*
  * 描述：please add a description here
  * 时间：2019-07-03
  */
-class ProjectFragment : BaseFragment(), ProjectContract.View, OnRefreshListener, OnLoadMoreListener {
+class ProjectFragment : BaseFragment(), ProjectContract.View, OnRefreshListener, OnLoadMoreListener,
+    View.OnClickListener {
+
+    private var isGrid: Boolean = true
 
     private val mPresenter: ProjectPresenter by lazy { ProjectPresenter() }
 
-    private val mProjectAdapter: ProjectAdapter by lazy { ProjectAdapter(R.layout.item_project_list) }
+    private var mProjectAdapter: ProjectAdapter? = null
 
     private var mTitle: String? = null
 
@@ -59,9 +63,12 @@ class ProjectFragment : BaseFragment(), ProjectContract.View, OnRefreshListener,
         mPresenter.attachView(this)
 
         iv_back.visibility = View.GONE
+        iv_right.visibility = View.VISIBLE
         tv_title.text = "项目"
         val layoutParams = v_status_bar_placeholder_layout_common_title.layoutParams
         layoutParams.height = activity!!.let { StatusBarUtil.getStatusBarHeight(it) }
+
+        iv_right.setOnClickListener(this@ProjectFragment)
 
         initRefreshLayout()
         initRecyclerView()
@@ -73,8 +80,7 @@ class ProjectFragment : BaseFragment(), ProjectContract.View, OnRefreshListener,
     }
 
     private fun initRecyclerView() {
-        rv_project_fragment.layoutManager = LinearLayoutManager(context)
-        rv_project_fragment.adapter = mProjectAdapter
+        changeLayoutManager(false)
 
         mProjectAdapter?.onItemClickListener = BaseQuickAdapter.OnItemClickListener { adapter, view, position ->
             val item: Data = adapter.getItem(position) as Data
@@ -83,16 +89,37 @@ class ProjectFragment : BaseFragment(), ProjectContract.View, OnRefreshListener,
         }
     }
 
+    override fun onClick(v: View) {
+        changeLayoutManager(isGrid)
+    }
+
+    private fun changeLayoutManager(isGrid: Boolean) {
+        if (isGrid) {
+            iv_right.setImageResource(R.drawable.icon_list)
+            mProjectAdapter = ProjectAdapter(R.layout.item_project_grid)
+            rv_project_fragment.layoutManager = GridLayoutManager(context, 2)
+        } else {
+            iv_right.setImageResource(R.drawable.icon_grid)
+            mProjectAdapter = ProjectAdapter(R.layout.item_project_list)
+            rv_project_fragment.layoutManager = LinearLayoutManager(context)
+        }
+
+        rv_project_fragment.adapter = mProjectAdapter
+
+        srl_project_fragment.autoRefresh()
+
+        this.isGrid = !isGrid
+    }
+
 
     override fun lazyLoad() {
-        showProgressDialog()
         mPresenter.getProjectList(false, pageIndex)
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
         pageIndex = 0
         srl_project_fragment.resetNoMoreData()
-        mPresenter.getProjectList(true,pageIndex)
+        mPresenter.getProjectList(true, pageIndex)
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
@@ -100,7 +127,6 @@ class ProjectFragment : BaseFragment(), ProjectContract.View, OnRefreshListener,
     }
 
     override fun getProjectListSuccess(bean: ArticleBean) {
-        hideProgressDialog()
         srl_project_fragment.finishRefresh()
 
         val datas = bean.datas
@@ -110,20 +136,19 @@ class ProjectFragment : BaseFragment(), ProjectContract.View, OnRefreshListener,
 
         if (curPage != totalPage) {
             if (pageIndex == 0) {
-                mProjectAdapter.setNewData(datas)
+                mProjectAdapter?.setNewData(datas)
             } else {
-                mProjectAdapter.addData(datas)
+                mProjectAdapter?.addData(datas)
             }
             srl_project_fragment.finishLoadMore()
             pageIndex++
         } else {
-            mProjectAdapter.setNewData(datas)
+            mProjectAdapter?.setNewData(datas)
             srl_project_fragment.finishLoadMoreWithNoMoreData()
         }
     }
 
     override fun getProjectListFailed(errCode: Int, message: String) {
-        hideProgressDialog()
         srl_project_fragment.finishRefresh()
         ToastUtils.showShort(message)
     }

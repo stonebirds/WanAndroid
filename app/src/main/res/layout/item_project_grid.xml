@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="?selectableItemBackground"
+                android:clickable="true"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp">
+
+    <ImageView
+            android:id="@+id/iv_pic_project_list_item"
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/bg_mine"/>
+
+
+    <TextView
+            android:id="@+id/tv_title_project_list_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_pic_project_list_item"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="16dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/black_333333"
+            android:textSize="16sp"
+            tools:text="标题"/>
+
+    <TextView
+            android:id="@+id/tv_intro_project_list_item"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_title_project_list_item"
+            android:layout_marginTop="5dp"
+            android:ellipsize="end"
+            android:lines="2"
+            android:textColor="@color/gray_999999"
+            android:textSize="16sp"
+            tools:text="标题"/>
+
+    <ImageView
+            android:id="@+id/iv_flavor_pic_project_list_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_intro_project_list_item"
+            android:layout_marginTop="10dp"
+            android:clickable="true"
+            android:src="@drawable/icon_unflavor"/>
+
+    <TextView
+            android:id="@+id/tv_author_project_list_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_intro_project_list_item"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/iv_flavor_pic_project_list_item"
+            android:textColor="@color/gray_999999"
+            android:textSize="12sp"
+            tools:text="@string/article_author"/>
+
+    <TextView
+            android:id="@+id/tv_time_project_list_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/tv_author_project_list_item"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="16dp"
+            android:textColor="@color/gray_999999"
+            android:textSize="12sp"
+            tools:text="2019-08-04"/>
+</RelativeLayout>

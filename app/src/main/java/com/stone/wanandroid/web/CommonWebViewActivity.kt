@@ -2,11 +2,17 @@ package com.stone.wanandroid.web
 
 import android.os.Build
 import android.view.View
+import android.view.ViewGroup
 import android.webkit.WebChromeClient
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
+import android.widget.LinearLayout
 import android.widget.ProgressBar
+import android.widget.RelativeLayout
+import com.blankj.utilcode.util.ColorUtils
+import com.blankj.utilcode.util.ConvertUtils
+import com.blankj.utilcode.util.LogUtils
 import com.stone.common.base.BaseActivity
 import com.stone.wanandroid.R
 import com.stone.wanandroid.constant.CommonConstant
@@ -41,18 +47,20 @@ class CommonWebViewActivity : BaseActivity() {
         url = intent.getStringExtra(CommonConstant.COMMON_WEB_URL)
         title = intent.getStringExtra(CommonConstant.COMMON_WEB_TITLE)
 
-        mProgressBar.max = 100
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            mProgressBar.progressDrawable = resources.getDrawable(R.drawable.common_web_progress_bg, null)
-        } else {
-            mProgressBar.progressDrawable = resources.getDrawable(R.drawable.common_web_progress_bg)
-        }
+        initProgressBar(mProgressBar)
 
         rl_container_common_web_activity.addView(mWebView)
         rl_container_common_web_activity.addView(mProgressBar)
 
         initWebView()
+    }
+
+    private fun initProgressBar(progressBar: ProgressBar) {
+        val params = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ConvertUtils.dp2px(1f))
+        progressBar.layoutParams = params
+        progressBar.isIndeterminate = false
+        progressBar.max = 100
+        progressBar.progressDrawable = resources.getDrawable(R.drawable.webview_progress_horizontal)
     }
 
     private fun initWebView() {
@@ -74,12 +82,13 @@ class CommonWebViewActivity : BaseActivity() {
 
     inner class MWebChromeClient : WebChromeClient() {
         override fun onProgressChanged(view: WebView?, newProgress: Int) {
+            LogUtils.d("newProgress------------$newProgress")
             super.onProgressChanged(view, newProgress)
             if (newProgress == 100) {
-                this@CommonWebViewActivity.mProgressBar.visibility = View.GONE
+                mProgressBar.visibility = View.GONE
             } else {
-                this@CommonWebViewActivity.mProgressBar.visibility = View.VISIBLE
-                this@CommonWebViewActivity.mProgressBar.progress = newProgress
+                mProgressBar.visibility = View.VISIBLE
+                mProgressBar.progress = newProgress
             }
         }
     }

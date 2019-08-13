@@ -1,7 +1,7 @@
 package com.stone.wanandroid.greendao
 
 import android.content.Context
-import com.stone.wanandroid.login.bean.UserInfoBean
+import com.stone.wanandroid.bean.UserInfoBean
 
 /**
  *

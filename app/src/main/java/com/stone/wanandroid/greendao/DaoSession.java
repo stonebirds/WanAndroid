@@ -8,7 +8,7 @@ import org.greenrobot.greendao.database.Database;
 import org.greenrobot.greendao.identityscope.IdentityScopeType;
 import org.greenrobot.greendao.internal.DaoConfig;
 
-import com.stone.wanandroid.login.bean.UserInfoBean;
+import com.stone.wanandroid.bean.UserInfoBean;
 
 import com.stone.wanandroid.greendao.UserInfoBeanDao;
 

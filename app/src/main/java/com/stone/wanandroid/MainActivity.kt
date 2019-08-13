@@ -5,11 +5,11 @@ import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
 import com.stone.common.base.BaseActivity
 import com.stone.common.util.StatusBarUtil
-import com.stone.wanandroid.category.fragment.CategoryFragment
-import com.stone.wanandroid.home.bean.TabEntity
-import com.stone.wanandroid.home.fragment.HomeFragment
-import com.stone.wanandroid.mine.fragment.MineFragment
-import com.stone.wanandroid.project.fragment.ProjectFragment
+import com.stone.wanandroid.fragment.CategoryFragment
+import com.stone.wanandroid.bean.TabEntity
+import com.stone.wanandroid.fragment.HomeFragment
+import com.stone.wanandroid.fragment.MineFragment
+import com.stone.wanandroid.fragment.ProjectFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity(), OnTabSelectListener {

@@ -2,7 +2,7 @@ package com.stone.wanandroid.manager
 
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.SPUtils
-import com.stone.wanandroid.login.bean.LoginBean
+import com.stone.wanandroid.bean.LoginBean
 
 /**
  *

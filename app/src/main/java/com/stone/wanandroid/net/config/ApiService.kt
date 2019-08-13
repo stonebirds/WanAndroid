@@ -1,11 +1,11 @@
 package com.stone.wanandroid.net.config
 
-import com.stone.wanandroid.category.bean.CategoryArticleBean
-import com.stone.wanandroid.category.bean.CategoryBean
+import com.stone.wanandroid.bean.CategoryArticleBean
+import com.stone.wanandroid.bean.CategoryBean
 import com.stone.wanandroid.net.bean.BaseResult
-import com.stone.wanandroid.home.bean.HomeBannerBean
-import com.stone.wanandroid.home.bean.ArticleBean
-import com.stone.wanandroid.login.bean.LoginBean
+import com.stone.wanandroid.bean.HomeBannerBean
+import com.stone.wanandroid.bean.ArticleBean
+import com.stone.wanandroid.bean.LoginBean
 import io.reactivex.Observable
 import retrofit2.http.*
 

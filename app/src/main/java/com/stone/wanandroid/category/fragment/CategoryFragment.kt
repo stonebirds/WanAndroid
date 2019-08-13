@@ -17,7 +17,6 @@ import com.stone.wanandroid.category.adapter.CategoryArticleAdapter
 import com.stone.wanandroid.category.bean.CategoryArticleBean
 import com.stone.wanandroid.category.bean.CategoryBean
 import com.stone.wanandroid.category.contract.CategoryContract
-import com.stone.wanandroid.home.adapter.HomeAdapter
 import com.stone.wanandroid.home.presenter.CategoryPresenter
 import com.stone.wanandroid.util.ActivityRouter
 import kotlinx.android.synthetic.main.fragment_category.*

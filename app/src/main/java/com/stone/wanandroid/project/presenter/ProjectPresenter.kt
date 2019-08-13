@@ -5,9 +5,7 @@ import com.stone.wanandroid.net.bean.BaseResult
 import com.stone.wanandroid.net.manager.RetrofitHelper
 import com.stone.wanandroid.net.manager.RxHelper
 import com.stone.wanandroid.net.manager.RxSubscribe
-import com.stone.wanandroid.home.bean.HomeBannerBean
 import com.stone.wanandroid.home.bean.ArticleBean
-import com.stone.wanandroid.home.contract.HomeContract
 import com.stone.wanandroid.net.config.ApiService
 import com.stone.wanandroid.project.contract.ProjectContract
 

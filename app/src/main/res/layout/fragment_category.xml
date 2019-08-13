@@ -1,8 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent" android:layout_height="match_parent"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
               android:orientation="vertical">
 
     <include layout="@layout/layout_common_title"/>
 
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/srl_category_fragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            app:srlEnableAutoLoadMore="true"
+            app:srlEnableFooterFollowWhenNoMoreData="true"
+            app:srlEnableFooterFollowWhenLoadFinished="true"
+            app:srlEnableLoadMoreWhenContentNotFull="false"
+    >
+        <com.scwang.smartrefresh.layout.header.ClassicsHeader
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        <android.support.design.widget.CoordinatorLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:orientation="vertical">
+
+            <android.support.design.widget.AppBarLayout
+                    android:id="@+id/appBarLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:orientation="vertical"
+                    app:elevation="0dp">
+
+                <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_scrollFlags="scroll|exitUntilCollapsed|enterAlwaysCollapsed|snap">
+
+                    <android.support.v7.widget.RecyclerView
+                            android:id="@+id/rv_category_one"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:orientation="horizontal"
+                            android:overScrollMode="never"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:scrollbars="none"
+                            app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
+                            tools:listitem="@layout/item_category"/>
+
+                    <android.support.v7.widget.RecyclerView
+                            android:id="@+id/rv_category_two"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:overScrollMode="never"
+                            android:paddingLeft="16dp"
+                            android:paddingRight="16dp"
+                            android:scrollbars="none"
+                            app:layoutManager="com.google.android.flexbox.FlexboxLayoutManager"
+                            tools:listitem="@layout/item_category"/>
+
+                </LinearLayout>
+            </android.support.design.widget.AppBarLayout>
+
+            <android.support.v7.widget.RecyclerView
+                    android:id="@+id/rv_article_list_category_fragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+        </android.support.design.widget.CoordinatorLayout>
+        <com.scwang.smartrefresh.layout.footer.ClassicsFooter
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

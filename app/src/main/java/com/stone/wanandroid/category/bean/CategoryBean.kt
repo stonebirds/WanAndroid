@@ -7,23 +7,13 @@ package com.stone.wanandroid.category.bean
  * 时间：2019-08-09
  */
 data class CategoryBean(
-    val children: List<Children>,
-    val courseId: Int,
-    val id: Int,
-    val name: String,
-    val order: Int,
-    val parentChapterId: Int,
-    val userControlSetTop: Boolean,
-    val visible: Int
-)
-
-data class Children(
-    val children: List<Any>,
-    val courseId: Int,
-    val id: Int,
-    val name: String,
-    val order: Int,
-    val parentChapterId: Int,
-    val userControlSetTop: Boolean,
-    val visible: Int
+    var children: List<CategoryBean>,
+    var courseId: Int,
+    var id: String,
+    var name: String,
+    var order: Int,
+    var parentChapterId: Int,
+    var userControlSetTop: Boolean,
+    var visible: Int,
+    var isSelected: Boolean = false
 )

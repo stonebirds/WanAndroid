@@ -16,9 +16,9 @@ import com.stone.common.base.BaseFragment
 import com.stone.common.util.StatusBarUtil
 import com.stone.wanandroid.R
 import com.stone.wanandroid.home.adapter.HomeAdapter
+import com.stone.wanandroid.home.bean.ArticleBean
 import com.stone.wanandroid.home.bean.Data
 import com.stone.wanandroid.home.bean.HomeBannerBean
-import com.stone.wanandroid.home.bean.ArticleBean
 import com.stone.wanandroid.home.contract.HomeContract
 import com.stone.wanandroid.home.presenter.HomePresenter
 import com.stone.wanandroid.util.ActivityRouter
@@ -187,7 +187,7 @@ class HomeFragment : BaseFragment(), HomeContract.View, OnRefreshListener, OnLoa
             srl_home_fragment.finishLoadMore()
             pageIndex++
         } else {
-            mHomeAdapter.setNewData(datas)
+            mHomeAdapter.addData(datas)
             srl_home_fragment.finishLoadMoreWithNoMoreData()
         }
     }

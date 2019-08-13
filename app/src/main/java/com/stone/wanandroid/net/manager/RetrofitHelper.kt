@@ -41,7 +41,7 @@ object RetrofitHelper {
     }
 
 
-    fun createRetrofit(): Retrofit {
+    private fun createRetrofit(): Retrofit {
         val builder = Retrofit.Builder()
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
@@ -50,7 +50,7 @@ object RetrofitHelper {
         return builder.build()
     }
 
-    fun createRetrofit(url: String): Retrofit {
+    private fun createRetrofit(url: String): Retrofit {
         val builder = Retrofit.Builder()
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())

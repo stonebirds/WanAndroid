@@ -117,7 +117,7 @@ class ProjectFragment : BaseFragment(), ProjectContract.View, OnRefreshListener,
             srl_project_fragment.finishLoadMore()
             pageIndex++
         } else {
-            mProjectAdapter.setNewData(datas)
+            mProjectAdapter.addData(datas)
             srl_project_fragment.finishLoadMoreWithNoMoreData()
         }
     }

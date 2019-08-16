@@ -75,6 +75,8 @@ class LoginActivity : BaseActivity(), LoginContract.View, TextWatcher, View.OnCl
 
             R.id.btn_login_activity -> {
                 doLogin()
+
+
             }
         }
     }

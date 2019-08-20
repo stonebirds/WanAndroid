@@ -11,6 +11,8 @@ import android.widget.Toast
 import com.classic.common.MultipleStatusView
 import com.stone.common.dialog.SProgressDialog
 import io.reactivex.annotations.NonNull
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -21,7 +23,7 @@ import pub.devrel.easypermissions.EasyPermissions
  * 描述：please add a description here
  * 时间：${DATE}
  */
-abstract class BaseFragment : Fragment(), EasyPermissions.PermissionCallbacks {
+open abstract class BaseFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     //视图是否加载完毕
     private var isViewPrepare = false
     //数据是否加载过了
@@ -30,6 +32,17 @@ abstract class BaseFragment : Fragment(), EasyPermissions.PermissionCallbacks {
     private val mLayoutStatusView: MultipleStatusView by lazy { MultipleStatusView(context) }
 
     private var mProgressDialog: SProgressDialog? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (isRegisterEventBus() && !EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this)
+        }
+    }
+
+    open fun isRegisterEventBus(): Boolean {
+        return false
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(getLayoutId(), null)
@@ -138,9 +151,16 @@ abstract class BaseFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         mProgressDialog?.dismiss()
     }
 
+    @Subscribe
+    fun Event() {
+
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         mProgressDialog?.dismiss()
+
+        EventBus.getDefault().unregister(this)
     }
 
 }

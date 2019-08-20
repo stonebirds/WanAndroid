@@ -12,6 +12,8 @@ import com.classic.common.MultipleStatusView
 import com.stone.common.dialog.SProgressDialog
 import com.stone.common.util.StatusBarUtil
 import io.reactivex.annotations.NonNull
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
 import pub.devrel.easypermissions.AppSettingsDialog
 import pub.devrel.easypermissions.EasyPermissions
 
@@ -22,7 +24,7 @@ import pub.devrel.easypermissions.EasyPermissions
  * 描述：please add a description here
  * 时间：${DATE}
  */
-abstract class BaseActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
+open abstract class BaseActivity : AppCompatActivity(), EasyPermissions.PermissionCallbacks {
     //多种状态的 View 的切换
     private var mLayoutStatusView: MultipleStatusView? = null
     //加载进度框
@@ -31,6 +33,10 @@ abstract class BaseActivity : AppCompatActivity(), EasyPermissions.PermissionCal
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(layoutId())
+
+        if (isRegisterEventBus() && !EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this)
+        }
 
         initStatusBar()
 
@@ -158,8 +164,18 @@ abstract class BaseActivity : AppCompatActivity(), EasyPermissions.PermissionCal
     override fun onDestroy() {
         super.onDestroy()
         mProgressDialog?.dismiss()
+
+        EventBus.getDefault().unregister(this)
     }
 
+    open fun isRegisterEventBus(): Boolean {
+        return false
+    }
+
+    @Subscribe
+    fun Event() {
+
+    }
 }
 
 

@@ -3,6 +3,7 @@ package com.stone.wanandroid.fragment
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
+import com.blankj.utilcode.util.LogUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.Glide
 import com.stone.common.base.BaseFragment
@@ -46,11 +47,6 @@ class MineFragment : BaseFragment(), View.OnClickListener {
         val layoutParams = v_status_bar_placeholder_layout_common_title.layoutParams
         layoutParams.height = activity!!.let { StatusBarUtil.getStatusBarHeight(it) }
 
-        ll_user_info_mine_fragment.visibility = if (UserInfoManager.isLogin()) View.VISIBLE else View.GONE
-        tv_user_info_mine_fragment.visibility = if (!UserInfoManager.isLogin()) View.VISIBLE else View.GONE
-
-        initUserInfo()
-
         initClickListener()
     }
 
@@ -58,15 +54,26 @@ class MineFragment : BaseFragment(), View.OnClickListener {
         btn_login.setOnClickListener(this@MineFragment)
         btn_flavor_mine_fragment.setOnClickListener(this@MineFragment)
         btn_about_mine_fragment.setOnClickListener(this@MineFragment)
+        btn_clock_mine_fragment.setOnClickListener(this@MineFragment)
         btn_setting_mine_fragment.setOnClickListener(this@MineFragment)
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        LogUtils.d("onResume------")
+        initUserInfo()
+    }
+
     private fun initUserInfo() {
+        ll_user_info_mine_fragment.visibility = if (UserInfoManager.isLogin()) View.VISIBLE else View.GONE
+        tv_user_info_mine_fragment.visibility = if (!UserInfoManager.isLogin()) View.VISIBLE else View.GONE
+
         var userInfo: LoginBean? = UserInfoManager.getUserInfo()
 
         nickname = userInfo?.nickname
 
-        if (!TextUtils.isEmpty(nickname)) {
+        if (userInfo != null && !TextUtils.isEmpty(nickname)) {
             tv_username_mine_fragment.text = nickname
         }
 
@@ -76,7 +83,16 @@ class MineFragment : BaseFragment(), View.OnClickListener {
                 .placeholder(R.drawable.bg_mine)
                 .error(R.drawable.bg_mine)
                 .into(iv_head_mine_fragment)
+        }
 
+        LogUtils.d("initUserInfo------")
+    }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        LogUtils.d("mine_fragment_onHiddenChanged-------$hidden")
+        if (!hidden) {
+            initUserInfo()
         }
     }
 
@@ -93,10 +109,17 @@ class MineFragment : BaseFragment(), View.OnClickListener {
                 }
             }
             R.id.btn_flavor_mine_fragment -> {
-                context?.let { ActivityRouter.startFlavorActivity(it) }
+                if (!UserInfoManager.isLogin()) {
+                    context?.let { ActivityRouter.startLoginActivity(it) }
+                } else {
+                    context?.let { ActivityRouter.startFlavorActivity(it) }
+                }
             }
             R.id.btn_about_mine_fragment -> {
                 context?.let { ActivityRouter.startCommonWebView(it, "https://github.com/stonebirds", "") }
+            }
+            R.id.btn_clock_mine_fragment -> {
+                context?.let { ActivityRouter.startTextClockActivity(it) }
             }
             R.id.btn_setting_mine_fragment -> {
                 context?.let { ActivityRouter.startSettingActivity(it) }

@@ -2,11 +2,9 @@ package com.stone.wanandroid.util
 
 import android.content.Context
 import android.content.Intent
-import com.stone.wanandroid.activity.FlavorActivity
+import com.stone.wanandroid.MainActivity
+import com.stone.wanandroid.activity.*
 import com.stone.wanandroid.constant.CommonConstant
-import com.stone.wanandroid.activity.LoginActivity
-import com.stone.wanandroid.activity.RegisterActivity
-import com.stone.wanandroid.activity.SettingActivity
 import com.stone.wanandroid.web.CommonWebViewActivity
 
 /**
@@ -17,6 +15,15 @@ import com.stone.wanandroid.web.CommonWebViewActivity
  */
 class ActivityRouter {
     companion object {
+
+        /**
+         * 启动WebView
+         */
+        fun startMainActivity(context: Context, position: Int) {
+            var intent = Intent(context, MainActivity::class.java)
+            intent.putExtra(CommonConstant.MAIN_ACTIVITY_POSITION, position)
+            context.startActivity(intent)
+        }
 
         /**
          * 启动WebView
@@ -49,6 +56,14 @@ class ActivityRouter {
          */
         fun startFlavorActivity(context: Context) {
             var intent = Intent(context, FlavorActivity::class.java)
+            context.startActivity(intent)
+        }
+
+        /**
+         * 启动设置界面
+         */
+        fun startTextClockActivity(context: Context) {
+            var intent = Intent(context, TextClockActivity::class.java)
             context.startActivity(intent)
         }
 

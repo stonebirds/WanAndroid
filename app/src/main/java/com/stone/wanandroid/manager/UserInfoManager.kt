@@ -1,5 +1,6 @@
 package com.stone.wanandroid.manager
 
+import android.text.TextUtils
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.SPUtils
 import com.stone.wanandroid.bean.LoginBean
@@ -21,7 +22,12 @@ class UserInfoManager {
 
         fun getUserInfo(): LoginBean? {
             val json = SPUtils.getInstance().getString(USER_INFO)
+
             return GsonUtils.fromJson(json, LoginBean::class.javaObjectType)
+        }
+
+        fun deleteUserInfo() {
+            SPUtils.getInstance().clear()
         }
 
         fun isLogin(): Boolean {

@@ -14,11 +14,14 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import com.stone.common.base.BaseFragment
 import com.stone.common.util.StatusBarUtil
+import com.stone.wanandroid.MainActivity
 import com.stone.wanandroid.R
 import com.stone.wanandroid.adapter.HomeAdapter
 import com.stone.wanandroid.bean.ArticleBean
 import com.stone.wanandroid.bean.Data
 import com.stone.wanandroid.bean.HomeBannerBean
+import com.stone.wanandroid.bean.event.LoginEvent
+import com.stone.wanandroid.bean.event.LogoutEvent
 import com.stone.wanandroid.contract.HomeContract
 import com.stone.wanandroid.presenter.HomePresenter
 import com.stone.wanandroid.util.ActivityRouter
@@ -27,6 +30,7 @@ import com.youth.banner.Banner
 import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.item_home_banner.view.*
 import kotlinx.android.synthetic.main.layout_common_title.*
+import org.greenrobot.eventbus.Subscribe
 
 /**
  *
@@ -78,6 +82,7 @@ class HomeFragment : BaseFragment(), HomeContract.View, OnRefreshListener, OnLoa
     }
 
     private fun initRefreshLayout() {
+
         srl_home_fragment.setOnRefreshListener(this@HomeFragment)
         srl_home_fragment.setOnLoadMoreListener(this@HomeFragment)
     }
@@ -89,13 +94,11 @@ class HomeFragment : BaseFragment(), HomeContract.View, OnRefreshListener, OnLoa
         rv_home_fragment.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
-                LogUtils.d("onScrolled-----------######    $newState")
             }
 
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val statusBarHeight = activity!!.let { StatusBarUtil.getStatusBarHeight(it) }
-                LogUtils.d("onScrolled-----------######    $dy--------------$statusBarHeight")
                 scrollY += dy
 
                 if ((1.0 * scrollY / ConvertUtils.dp2px(180f)).toFloat() > 0.5f) {
@@ -145,6 +148,8 @@ class HomeFragment : BaseFragment(), HomeContract.View, OnRefreshListener, OnLoa
 
     override fun lazyLoad() {
         showProgressDialog()
+        ll_layout_common_title.alpha  = 0f
+        pageIndex = 0
         mPresenter.getHomeBanner()
         mPresenter.getHomeArticle(false, pageIndex)
     }

@@ -1,19 +1,27 @@
 package com.stone.wanandroid
 
+import android.content.Intent
 import android.support.v4.app.FragmentTransaction
+import com.blankj.utilcode.util.LogUtils
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
 import com.stone.common.base.BaseActivity
 import com.stone.common.util.StatusBarUtil
+import com.stone.wanandroid.bean.LoginBean
 import com.stone.wanandroid.fragment.CategoryFragment
 import com.stone.wanandroid.bean.TabEntity
+import com.stone.wanandroid.bean.event.LoginEvent
+import com.stone.wanandroid.bean.event.LogoutEvent
+import com.stone.wanandroid.constant.CommonConstant
 import com.stone.wanandroid.fragment.HomeFragment
 import com.stone.wanandroid.fragment.MineFragment
 import com.stone.wanandroid.fragment.ProjectFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import org.greenrobot.eventbus.Subscribe
 
 class MainActivity : BaseActivity(), OnTabSelectListener {
     companion object {
+        const val FRAGMENT_NONE = -1
         const val FRAGMENT_HOME = 0
         const val FRAGMENT_PROJECT = 1
         const val FRAGMENT_CATEGORY = 2
@@ -40,7 +48,7 @@ class MainActivity : BaseActivity(), OnTabSelectListener {
     private var mMineFragment: MineFragment? = null
 
     private val mTabEntities = ArrayList<CustomTabEntity>()
-    private var mIndex = 0
+    private var mIndex: Int = 0
 
     override fun layoutId(): Int {
         return R.layout.activity_main
@@ -50,6 +58,10 @@ class MainActivity : BaseActivity(), OnTabSelectListener {
     }
 
     override fun initView() {
+        if (intent.hasExtra(CommonConstant.MAIN_ACTIVITY_POSITION)) {
+            mIndex = intent.getIntExtra(CommonConstant.MAIN_ACTIVITY_POSITION, 0)
+        }
+
         StatusBarUtil.setRootViewFitsSystemWindows(this, false)
         StatusBarUtil.setStatusBarDarkTheme(this, false)
 
@@ -64,10 +76,20 @@ class MainActivity : BaseActivity(), OnTabSelectListener {
         tb_main_activity.setTabData(mTabEntities)
         tb_main_activity.setOnTabSelectListener(this)
         tb_main_activity.currentTab = mIndex
+
+        LogUtils.d("initView-----------$mIndex")
         selectFragment(mIndex)
     }
 
     override fun start() {
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        mIndex = intent.getIntExtra(CommonConstant.MAIN_ACTIVITY_POSITION, 0)
+        LogUtils.d("onNewIntent-----------$mIndex")
+        selectFragment(mIndex)
     }
 
 
@@ -134,5 +156,27 @@ class MainActivity : BaseActivity(), OnTabSelectListener {
         mProjectFragment?.let { transaction.hide(it) }
         mCategoryFragment?.let { transaction.hide(it) }
         mMineFragment?.let { transaction.hide(it) }
+    }
+
+    override fun isRegisterEventBus(): Boolean {
+        return true
+    }
+
+    @Subscribe
+    fun logoutEvent(event: LogoutEvent) {
+        LogUtils.d("logoutEvent-----------")
+        mHomeFragment?.let { it.lazyLoad() }
+        mProjectFragment?.let { it.lazyLoad() }
+        mCategoryFragment?.let { it.lazyLoad() }
+        mMineFragment?.let { it.lazyLoad() }
+    }
+
+    @Subscribe
+    fun loginEvent(event: LoginEvent) {
+        LogUtils.d("loginEvent-----------")
+        mHomeFragment?.let { it.lazyLoad() }
+        mProjectFragment?.let { it.lazyLoad() }
+        mCategoryFragment?.let { it.lazyLoad() }
+        mMineFragment?.let { it.lazyLoad() }
     }
 }

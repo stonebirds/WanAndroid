@@ -10,6 +10,7 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import com.stone.common.base.BaseFragment
 import com.stone.common.util.StatusBarUtil
+import com.stone.wanandroid.MainActivity
 import com.stone.wanandroid.R
 import com.stone.wanandroid.adapter.CategoryAdapter
 import com.stone.wanandroid.adapter.CategoryAdapterTwo

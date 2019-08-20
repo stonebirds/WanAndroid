@@ -6,6 +6,7 @@ import com.stone.wanandroid.net.bean.BaseResult
 import com.stone.wanandroid.bean.HomeBannerBean
 import com.stone.wanandroid.bean.ArticleBean
 import com.stone.wanandroid.bean.LoginBean
+import com.stone.wanandroid.bean.LogoutBean
 import io.reactivex.Observable
 import retrofit2.http.*
 
@@ -20,6 +21,10 @@ interface ApiService {
     @FormUrlEncoded
     @POST("user/register")
     fun doRegister(@FieldMap params: HashMap<String, String>): Observable<BaseResult<LoginBean>>
+
+    //退出登录
+    @GET("user/logout/json")
+    fun doLogout(): Observable<BaseResult<LogoutBean>>
 
     //首页Banner
     @GET("banner/json")

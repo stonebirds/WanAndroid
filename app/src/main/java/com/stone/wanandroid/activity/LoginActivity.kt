@@ -7,12 +7,16 @@ import android.view.View
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.ToastUtils
 import com.stone.common.base.BaseActivity
+import com.stone.wanandroid.MainActivity
 import com.stone.wanandroid.R
 import com.stone.wanandroid.bean.LoginBean
+import com.stone.wanandroid.bean.event.LoginEvent
 import com.stone.wanandroid.contract.LoginContract
 import com.stone.wanandroid.presenter.LoginPresenter
+import com.stone.wanandroid.util.ActivityRouter
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.layout_common_title.*
+import org.greenrobot.eventbus.EventBus
 
 /**
  *
@@ -95,6 +99,8 @@ class LoginActivity : BaseActivity(), LoginContract.View, TextWatcher, View.OnCl
 
     override fun loginSuccess(bean: LoginBean) {
         hideProgressDialog()
+//        EventBus.getDefault().post(LoginEvent())
+        ActivityRouter.startMainActivity(this, MainActivity.FRAGMENT_MINE)
         finish()
     }
 

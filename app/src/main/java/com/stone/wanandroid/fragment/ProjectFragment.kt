@@ -11,14 +11,18 @@ import com.scwang.smartrefresh.layout.listener.OnLoadMoreListener
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import com.stone.common.base.BaseFragment
 import com.stone.common.util.StatusBarUtil
+import com.stone.wanandroid.MainActivity
 import com.stone.wanandroid.bean.ArticleBean
 import com.stone.wanandroid.bean.Data
 import com.stone.wanandroid.adapter.ProjectAdapter
+import com.stone.wanandroid.bean.event.LoginEvent
+import com.stone.wanandroid.bean.event.LogoutEvent
 import com.stone.wanandroid.contract.ProjectContract
 import com.stone.wanandroid.presenter.ProjectPresenter
 import com.stone.wanandroid.util.ActivityRouter
 import kotlinx.android.synthetic.main.fragment_project.*
 import kotlinx.android.synthetic.main.layout_common_title.*
+import org.greenrobot.eventbus.Subscribe
 
 /**
  *
@@ -26,7 +30,7 @@ import kotlinx.android.synthetic.main.layout_common_title.*
  * 描述：please add a description here
  * 时间：2019-07-03
  */
-class ProjectFragment : BaseFragment(), ProjectContract.View, OnRefreshListener, OnLoadMoreListener {
+class ProjectFragment : BaseFragment(), ProjectContract.View, OnRefreshListener, OnLoadMoreListener{
 
     private val mPresenter: ProjectPresenter by lazy { ProjectPresenter() }
 
@@ -85,13 +89,14 @@ class ProjectFragment : BaseFragment(), ProjectContract.View, OnRefreshListener,
 
     override fun lazyLoad() {
         showProgressDialog()
+        pageIndex = 0
         mPresenter.getProjectList(false, pageIndex)
     }
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
         pageIndex = 0
         srl_project_fragment.resetNoMoreData()
-        mPresenter.getProjectList(true,pageIndex)
+        mPresenter.getProjectList(true, pageIndex)
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
